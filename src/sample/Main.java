@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.jws.WebParam;
 import java.awt.*;
 
 
@@ -21,6 +22,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        Model model = new Model();
+        model.runCalculations();
 
         //ELEMENTS CREATION
         final Rectangle rect = createRectangle(0,0,100,100,3);

@@ -1,5 +1,8 @@
 package sample;
 
+import javax.sound.midi.Soundbank;
+import java.util.stream.Stream;
+
 import static sample.Constans.*;
 
 public class Model {
@@ -13,9 +16,20 @@ public class Model {
         MLCA();
 
     }
+    public void printTable(String description, int[] table){
+        System.out.print(description+ " ");
+        for (int t : table){
+            System.out.print(" "+t);
+        }
+        System.out.println();
+
+    }
     public void MLCA(){
         //Step 0. Obtain the values of hi and  for i ∈ V and k = 1, 2, 3, using Dijkstra’s algorithm. (See the appendix for procedures.) Let Λ ← ∅.
         dijkstra.runDijkstraAlgorithm();
+        printTable("Vertice ", new int[1]);
+        printTable("Vertice ", grid.getHTable());
+
         //Step 1. Set d1(s, s) ← () and d1(s, i) ← (∞, ∞, ∞), i ∈ V{s}.
         // Insert the label of the path containing only the source vertex, L1(s) = { hs, π1(s, s)}, to Λ, i.e., let Λ ← {L1(s)}.
 

@@ -35,7 +35,12 @@ public class Grid {
             for (int j=0 ; j <GRID_DIM; j++){
                 for (int k=-1 ; k < 2; k++) {
                     for (int l = -1; l < 2; l++) {
-                        if  vertices[i][j].getPhi_a().add()
+                        if ((i + k) > -1 && (i + k) < GRID_DIM  && (j + l) > -1 && (j + l) < GRID_DIM )
+                            if (k==0 && l==0){
+
+                            } else {
+                                vertices[i][j].getPhi_a().add((i+k) * GRID_DIM + j + l);
+                            }
                     }
                 }
             }
@@ -47,7 +52,21 @@ public class Grid {
             }
         }
     }
-    public Vertice[] getVertices(){
+    public Vertice[] getVerticesTable(){
         return verticesTable;
+    }
+
+    public int[] getHTable(){
+        int[] hTable = new int[Constans.VERTICES_NUM];
+        int i = 0;
+        for (Vertice ver : verticesTable){
+            hTable[i] = ver.getH();
+            i++;
+        }
+        return  hTable;
+    }
+
+    public void setVerticesTable(Vertice[] verticesTable) {
+        this.verticesTable = verticesTable;
     }
 }
