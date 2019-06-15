@@ -1,6 +1,9 @@
 package sample;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static sample.Constans.GRID_DIM;
 import static sample.Constans.VERTICES_NUM;
 
@@ -27,6 +30,16 @@ public class Grid {
         vertices[3][1] = new Vertice(13, 2, 1 ,1);
         vertices[3][2] = new Vertice(14, 3, 4 ,3);
         vertices[3][3] = new Vertice(15, 1, 4 ,2);
+
+        for (int i=0 ; i <GRID_DIM; i++){
+            for (int j=0 ; j <GRID_DIM; j++){
+                for (int k=-1 ; k < 2; k++) {
+                    for (int l = -1; l < 2; l++) {
+                        if  vertices[i][j].getPhi_a().add()
+                    }
+                }
+            }
+        }
 
         for (int i=0 ; i <GRID_DIM; i++){
             for (int j=0 ; j <GRID_DIM; j++){

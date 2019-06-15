@@ -1,4 +1,6 @@
 package sample;
+import java.util.ArrayList;
+
 import static sample.Constans.JL;
 import static sample.Constans.TT;
 import static sample.Constans.RL;
@@ -9,12 +11,14 @@ public class Vertice {
     //cost vector
     int[] c;
     int h;
+    ArrayList<Integer> phi_a;
     public Vertice(int id, int[] c) {
         this.id = id;
         this.c = c;
     }
     public Vertice(int id, int TT, int RL, int JL) {
         this.id = id;
+        this.phi_a = new ArrayList<>();
         this.c[Constans.TT]=TT;
         this.c[Constans.RL]=RL;
         this.c[Constans.JL]=JL;
@@ -65,5 +69,13 @@ public class Vertice {
 
     public void setH(int h) {
         this.h = h;
+    }
+
+    public ArrayList<Integer> getPhi_a() {
+        return phi_a;
+    }
+
+    public void setPhi_a(ArrayList<Integer> phi_a) {
+        this.phi_a = phi_a;
     }
 }

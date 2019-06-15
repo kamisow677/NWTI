@@ -34,23 +34,23 @@ public class Dijkstra {
         //Step 2. Select a vertex with the minimum value of hi among i ∈ S and let the selected vertex be vertex i∗, i.e., i∗ ← argmini∈S{hi}. Let S ← S − {i∗} and S∗ ← S∗ ∪ {i∗}.
         step2();
         //Step 3. For each j ∈ Φa(i), do: if hj > hi + ei, let hj ← hi + ei.
-
+        step3();
         //Step 4. If |S∗| < |V|, go to step 2; otherwise, stop.
+    }
+
+    private void step3() {
     }
 
     private void step2() {
         Stream<Vertice> stream = S.stream();
 
-        Comparator<? super Vertice> compMinH = (ver1, ver2) -> {
-            if (ver1.h<ver2.h)
-                return 0;
-            else
-                return 1;
-        };
+        Comparator<? super Vertice> compMinH = (ver1, ver2) -> (ver1.h<ver2.h) ? 0 : 1;
         final Optional<Vertice> minVertice = stream.min(compMinH);
 
+        Sgw.add(minVertice.get());
+        S.remove(minVertice.get());
         // displaying elements of Stream using lambda expression
-        stream.forEach(elem->System.out.print(elem+" "));
+        //stream.forEach(elem->System.out.print(elem+" "));
     }
 
     private void computeCombinedCostOfAllVertices() {
