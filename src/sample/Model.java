@@ -1,6 +1,8 @@
 package sample;
 
 import javax.sound.midi.Soundbank;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static sample.Constans.*;
@@ -8,10 +10,13 @@ import static sample.Constans.*;
 public class Model {
     Grid grid;
     Dijkstra dijkstra;
+    Set delta;
+    
+
     public void runCalculations(){
         grid = new Grid();
         dijkstra = new Dijkstra(grid,SOURCE,DESTINATION);
-
+        delta =new HashSet();
         //MLCA CALCULATIONS
         MLCA();
 
@@ -35,7 +40,7 @@ public class Model {
 
         //Step 1. Set d1(s, s) ← () and d1(s, i) ← (∞, ∞, ∞), i ∈ V{s}.
         // Insert the label of the path containing only the source vertex, L1(s) = { hs, π1(s, s)}, to Λ, i.e., let Λ ← {L1(s)}.
-
+        initialize();
         //Step 2. If Λ = ∅, terminate. Otherwise, select the label at the top of Λ, which has the minimum total label-value (and remove it from Λ).
 
         //Step 3. Let Lξ(i) be the selected label in step 2. If there is no vertex directly accessible from vertex i, go to step 2.
@@ -48,5 +53,9 @@ public class Model {
         //Step 5. For each non-dominated path (identified in step 4), do: if the path is a complete path,
         // insert the label of the path into P and remove labels of the paths in P that are dominated by that path from P;
         // otherwise, insert the label of the path into Λ according to the MTLV rule. Go to step 2.
+    }
+
+    private void initialize() {
+
     }
 }
