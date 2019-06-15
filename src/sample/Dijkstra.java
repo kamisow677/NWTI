@@ -31,14 +31,20 @@ public class Dijkstra {
         grid.setVerticesTable(vertices);
     }
     public void computeG(){
-        //Step 0. S ← V, S∗ ← ∅,  ← 0, and  ← ∞ for i ∈ V⧹{t}.
-        initializeG();
+        int k  = 0;
+        for (k = 0 ; k<3 ; k++) {
+            //Step 0. S ← V, S∗ ← ∅,  ← 0, and  ← ∞ for i ∈ V⧹{t}.
+            initializeG(k);
 
-        //Step 1. Select a vertex with the minimum value of  among i ∈ S and let the selected vertex be vertex i∗, i.e., i∗ ← argmini∈S{}. Let S ← S − {i∗} and S∗ ← S∗ ∪ {i∗}.
+            //Step 3. If |S∗| < |V|, go to step 1; otherwise, stop.
+            while (Sgw.size() < vertices.length) {
+                //Step 1. Select a vertex with the minimum value of  among i ∈ S and let the selected vertex be vertex i∗, i.e., i∗ ← argmini∈S{}. Let S ← S − {i∗} and S∗ ← S∗ ∪ {i∗}.
+                final int i = minGvertex(k);
+                // Step 2. For each j ∈ Φa(i), do: if  + ci, let .
+                forEachJinPHI_G(i, k);
+            }
+        }
 
-       // Step 2. For each j ∈ Φa(i), do: if  + ci, let .
-
-       //Step 3. If |S∗| < |V|, go to step 1; otherwise, stop.
 
     }
 
@@ -51,25 +57,34 @@ public class Dijkstra {
         //Step 4. If |S∗| < |V|, go to step 2; otherwise, stop.
         while (Sgw.size()<vertices.length) {
             //Step 2. Select a vertex with the minimum value of hi among i ∈ S and let the selected vertex be vertex i∗, i.e., i∗ ← argmini∈S{hi}. Let S ← S − {i∗} and S∗ ← S∗ ∪ {i∗}.
-            int i = step2();
+            int i = minHvertex();
             //Step 3. For each j ∈ Φa(i), do: if hj > hi + ei, let hj ← hi + ei.
-            step3(i);
+            forEachJinPHI_H(i);
         }
     }
 
 
-    private void step3(int i) {
+    private void forEachJinPHI_H(int i) {
         for (int j : vertices[i].getPhi_a()) {
             if (vertices[j].getH()>vertices[i].getH()+e[i]){
                 vertices[j].setH(vertices[i].getH()+e[i]);
             }
         }
     }
+    private void forEachJinPHI_G(int i , int k) {
+        for (int j : vertices[i].getPhi_a()) {
+            if (vertices[j].getG(k)>vertices[i].getG(k)+vertices[i].c(k)){
+                vertices[j].setG(k ,vertices[i].getG(k)+vertices[i].c(k));
+            }
+        }
+    }
 
-    private int step2() {
+
+
+    private int minHvertex() {
         Stream<Vertice> stream = S.stream();
 
-        Comparator<? super Vertice> compMinH = (ver1, ver2) -> (ver1.h<ver2.h) ? 0 : 1;
+        Comparator<? super Vertice> compMinH = (ver1, ver2) -> (ver1.getH()<ver2.getH()) ? 0 : 1;
         final Optional<Vertice> minVertice = stream.min(compMinH);
 
         Sgw.add(minVertice.get());
@@ -79,6 +94,19 @@ public class Dijkstra {
         // displaying elements of Stream using lambda expression
         //stream.forEach(elem->System.out.print(elem+" "));
     }
+
+    private int minGvertex(int k) {
+        Stream<Vertice> stream = S.stream();
+
+        Comparator<? super Vertice> compMinG = (ver1, ver2) -> (ver1.getG(k)<ver2.getG(k)) ? 0 : 1;
+        final Optional<Vertice> minVertice = stream.min(compMinG);
+
+        Sgw.add(minVertice.get());
+        S.remove(minVertice.get());
+
+        return minVertice.get().getId();
+    }
+
 
     private void computeCombinedCostOfAllVertices() {
         for (int i = 0; i< e.length; i++){
@@ -98,15 +126,15 @@ public class Dijkstra {
             }
         }
     }
-    private void initializeG() {
+    private void initializeG(int k) {
         S.addAll(Arrays.asList(vertices));
         Sgw.clear();
         for (int i = 0; i< vertices.length; i++){
             if (i == t) {
-                vertices[i].setH(0);
+                vertices[i].setG(k,0);
             }
             else{
-                vertices[i].setH(INFINITY);
+                vertices[i].setG(k, INFINITY);
             }
         }
     }

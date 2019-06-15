@@ -65,6 +65,17 @@ public class Grid {
         }
         return  hTable;
     }
+    public int[] getGTable(int k){
+        int[] gTable = new int[Constans.VERTICES_NUM];
+        int i = 0;
+        for (Vertice ver : verticesTable){
+            gTable[i] = ver.getG(k);
+            i++;
+        }
+        return  gTable;
+    }
+
+
 
     public void setVerticesTable(Vertice[] verticesTable) {
         this.verticesTable = verticesTable;

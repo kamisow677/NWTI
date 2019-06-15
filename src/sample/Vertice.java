@@ -9,9 +9,9 @@ import static sample.Constans.RL;
 public class Vertice {
     private int id;
     //cost vector
-    int[] c;
-    int[] g;
-    int h;
+    private int[] c;
+    private int[] g;
+    private int h;
     ArrayList<Integer> phi_a;
     public Vertice(int id, int[] c) {
         this.id = id;
@@ -47,7 +47,8 @@ public class Vertice {
         }
         return -1;
     }
-    public int g(int i){
+
+    public int getG(int i){
         try {
             switch (i){
                 case Constans.TT:{
@@ -68,6 +69,21 @@ public class Vertice {
         }
         return -1;
     }
+
+    public void setG(int k, int value){
+        switch (k) {
+            case Constans.TT: {
+                g[Constans.TT] = value;
+            }
+            case Constans.RL: {
+                g[Constans.RL] = value;
+            }
+            case Constans.JL: {
+                g[Constans.JL] = value;
+            }
+        }
+    }
+
 
     public int getTT(){
         return c[Constans.TT];
