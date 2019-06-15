@@ -27,12 +27,14 @@ public class Grid {
         vertices[3][1] = new Vertice(13, 2, 1 ,1);
         vertices[3][2] = new Vertice(14, 3, 4 ,3);
         vertices[3][3] = new Vertice(15, 1, 4 ,2);
-    }
-    public Vertice[] getVertices(){
+
         for (int i=0 ; i <GRID_DIM; i++){
             for (int j=0 ; j <GRID_DIM; j++){
-                verticesTable[i][j] =
+                verticesTable[i*GRID_DIM+j] = vertices[i][j];
             }
         }
+    }
+    public Vertice[] getVertices(){
+        return verticesTable;
     }
 }

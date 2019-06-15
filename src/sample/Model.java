@@ -1,14 +1,21 @@
 package sample;
 
-public class Model {
-    Grid grid = new Grid();
-    public void runCalculations(){
+import static sample.Constans.*;
 
+public class Model {
+    Grid grid;
+    Dijkstra dijkstra;
+    public void runCalculations(){
+        grid = new Grid();
+        dijkstra = new Dijkstra(grid,SOURCE,DESTINATION);
+
+        //MLCA CALCULATIONS
         MLCA();
+
     }
     public void MLCA(){
         //Step 0. Obtain the values of hi and  for i ∈ V and k = 1, 2, 3, using Dijkstra’s algorithm. (See the appendix for procedures.) Let Λ ← ∅.
-
+        dijkstra.runDijkstraAlgorithm();
         //Step 1. Set d1(s, s) ← () and d1(s, i) ← (∞, ∞, ∞), i ∈ V{s}.
         // Insert the label of the path containing only the source vertex, L1(s) = { hs, π1(s, s)}, to Λ, i.e., let Λ ← {L1(s)}.
 
