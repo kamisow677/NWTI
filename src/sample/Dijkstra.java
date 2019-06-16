@@ -25,10 +25,11 @@ public class Dijkstra {
         this.s = s;
         this.t = t;
     }
-    public void runDijkstraAlgorithm() {
+    public Vertice[] runDijkstraAlgorithm() {
         computeH();
         computeG();
         grid.setVerticesTable(vertices);
+        return vertices;
     }
     public void computeG(){
         int k  = 0;

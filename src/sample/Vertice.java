@@ -7,18 +7,19 @@ import static sample.Constans.RL;
 
 
 public class Vertice {
-    private int id;
+    private int i;
     //cost vector
     private int[] c;
+
     private int[] g;
     private int h;
     ArrayList<Integer> phi_a;
     public Vertice(int id, int[] c) {
-        this.id = id;
+        this.i = id;
         this.c = c;
     }
     public Vertice(int id, int TT, int RL, int JL) {
-        this.id = id;
+        this.i = id;
         this.phi_a = new ArrayList<>();
         this.c = new int[3];
         this.g = new int[3];
@@ -26,9 +27,9 @@ public class Vertice {
         this.c[Constans.RL]=RL;
         this.c[Constans.JL]=JL;
     }
-    public int c(int i){
+    public int c(int k){
         try {
-            switch (i){
+            switch (k){
                 case Constans.TT:{
                     return c[Constans.TT];
                 }
@@ -96,11 +97,11 @@ public class Vertice {
     }
 
     public int getId() {
-        return id;
+        return i;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.i = id;
     }
 
     public int getH() {

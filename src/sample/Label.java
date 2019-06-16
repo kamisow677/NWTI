@@ -1,16 +1,19 @@
 package sample;
 
 public class Label {
-    int epsilon;
-    int i;
-    int[] d;
-    int h;
-    Path path;
+    private int epsilon;
+    private int i;
+    private int[] d;
+    private int h;
+    private Path path;
 
-    public Label(int epsilon, int i, int[] d, int h, Path path) {
+    public Label(int epsilon, int i, int d0, int d1, int d2, int h, Path path) {
         this.epsilon = epsilon;
         this.i = i;
-        this.d = d;
+        this.d = new int[3];
+        this.d[0]=d0;
+        this.d[1]=d1;
+        this.d[2]=d2;
         this.h = h;
         this.path = path;
     }
@@ -31,13 +34,43 @@ public class Label {
         this.i = i;
     }
 
-    public int getD() {
-        return d;
+    public int getD(int k){
+        try {
+            switch (k){
+                case Constans.TT:{
+                    return d[Constans.TT];
+                }
+                case Constans.RL:{
+                    return d[Constans.RL];
+                }
+                case Constans.JL:{
+                    return d[Constans.JL];
+                }
+                default:
+                    throw new Exception();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
-    public void setD(int d) {
-        this.d = d;
+    public void setd(int k, int value){
+        switch (k) {
+            case Constans.TT: {
+                d[Constans.TT] = value;
+            }
+            case Constans.RL: {
+                d[Constans.RL] = value;
+            }
+            case Constans.JL: {
+                d[Constans.JL] = value;
+            }
+        }
     }
+
+
 
     public int getH() {
         return h;
