@@ -18,6 +18,10 @@ public class Label {
         this.path = path;
     }
 
+    public int dSum(){
+        return d[0] + d[1] +d[2];
+    }
+
     public int getEpsilon() {
         return epsilon;
     }
