@@ -113,6 +113,19 @@ public class Model {
                     delta.add(label);
                 }
             }
+
+            ArrayList<Label> temp1 = new ArrayList<Label> (delta);
+            delta.clear();
+            for (Label label : temp1) {
+                if (checkC1(label, vertices) == true || checkC2(label, vertices) == true) {
+
+                } else {
+                    delta.add(label);
+                }
+            }
+
+
+
             //sort by MLTV
             Comparator<? super Label> comp = (l1, l2)  -> {
                 if ((l1.dSum()+l1.getH()) > (l2.dSum()+l2.getH()))

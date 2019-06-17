@@ -6,7 +6,7 @@ public class Path {
     int epsilon;
     int start;
     int end;
-    ArrayList listOfVertices;
+    ArrayList<Integer> listOfVertices;
 
     public Path(Path path) {
         this.epsilon = path.epsilon;

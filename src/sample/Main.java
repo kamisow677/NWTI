@@ -1,22 +1,15 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.jws.WebParam;
-import java.awt.*;
-
+import java.util.List;
 
 public class Main extends Application {
 
@@ -35,16 +28,48 @@ public class Main extends Application {
         line.setStroke(Color.BLUE);
         line.setStrokeWidth(5);
 
-
-
         //FILLING WINDOW
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Group root = new Group();
-        root.getChildren().addAll(rect,rect2,text,text2,line);
+        //root.getChildren().addAll(rect,rect2,text,text2,line);
+
+        root = drawGrid(model.grid,root,model.P);
         primaryStage.setTitle("Hello World");
        //root.getChildren().addAll(stack);
         primaryStage.setScene(new Scene(root, 800, 875));
         primaryStage.show();
+    }
+
+    public static Group drawGrid(Grid grid, Group root, List<Label> pList){
+        int i = 0;
+        int j = 0;
+        Rectangle rectangle;
+        Text text;
+        for (Vertice[] verticeRow : grid.vertices){
+            for (Vertice vertice : verticeRow){
+                rectangle = createRectangle(100*i,100*j,100,100,3);
+                String string = new String(vertice.c(0)+" "+vertice.c(1)+" "+vertice.c(2));
+                text = new Text ( 100*i +30,100*j + 50,string);
+                root.getChildren().addAll(rectangle,text);
+                j++;
+            }
+            i++;
+            j=0;
+        }
+        Line line;
+        for (Label p : pList){
+            for (int k = 0; k <  p.getPath().listOfVertices.size()-1; k++ ){
+                int a = p.getPath().listOfVertices.get(k)/4;
+                int b = p.getPath().listOfVertices.get(k)%4;
+                int c = p.getPath().listOfVertices.get(k+1)/4;
+                int d = p.getPath().listOfVertices.get(k+1)%4;
+                line = new Line(100*a + 50, 100*b +50, 100*c + 50, 100*d +50);
+                root.getChildren().addAll(line);
+            }
+        }
+
+
+        return root;
     }
 
     public static Rectangle createRectangle(double x, double y, double width, double height, double w) {
