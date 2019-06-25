@@ -1,11 +1,9 @@
 package sample;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static sample.Constans.*;
@@ -15,6 +13,7 @@ public class Model {
     Dijkstra dijkstra;
     ArrayList<Label> delta;
     List<Label> P;
+    int[] U;
     
 
     public void runCalculations(){
@@ -22,6 +21,7 @@ public class Model {
         dijkstra = new Dijkstra(grid,SOURCE,DESTINATION);
         delta =new ArrayList();
         P =new ArrayList();
+        calculateU();
         //MLCA CALCULATIONS
         MLCA();
 
@@ -37,11 +37,12 @@ public class Model {
     public void MLCA(){
         //Step 0. Obtain the values of hi and  for i ∈ V and k = 1, 2, 3, using Dijkstra’s algorithm. (See the appendix for procedures.) Let Λ ← ∅.
         Vertice[] vertices = dijkstra.runDijkstraAlgorithm();
+        calculateU();
         printTable("Vertice ", new int[1]);
         printTable("H ", grid.getHTable());
-        printTable("G0", grid.getGTable(0));
-        printTable("G1", grid.getGTable(1));
-        printTable("G2", grid.getGTable(2));
+        printTable("G0", grid.getGTable(TT));
+        printTable("G1", grid.getGTable(RL));
+        printTable("G2", grid.getGTable(JL));
 
 
         boolean allDominated = true;
@@ -72,15 +73,15 @@ public class Model {
                     List<Label> existnigLabelsToAccessVertexI = stream.filter(pred).collect(Collectors.toList());
 
                     int[] d = new int[3];
-                    d[0] = LepI.getD(0) + vertices[accessVertexI].c(0);
-                    d[1] = LepI.getD(1)  + vertices[accessVertexI].c(1);
-                    d[2] = LepI.getD(2)  + vertices[accessVertexI].c(2);
+                    d[TT] = LepI.getD(TT) + vertices[accessVertexI].c(TT);
+                    d[RL] = LepI.getD(RL)  + vertices[accessVertexI].c(RL);
+                    d[JL] = LepI.getD(JL)  + vertices[accessVertexI].c(JL);
                     Path path = new Path(LepI.getPath());
                     path.epsilon = existnigLabelsToAccessVertexI.size();
                     path.add(accessVertexI);
                     path.end = accessVertexI;
 
-                    Label labelAccesible = new Label(existnigLabelsToAccessVertexI.size(), accessVertexI, d[0], d[1], d[2], vertices[accessVertexI].getH(), path);
+                    Label labelAccesible = new Label(existnigLabelsToAccessVertexI.size(), accessVertexI, d[TT], d[RL], d[JL], vertices[accessVertexI].getH(), path);
 
                     if (checkC1(labelAccesible, vertices)==true || checkC2(labelAccesible,vertices)==true) {
 
@@ -141,16 +142,22 @@ public class Model {
                 temp.remove(min.get());
             }
             //delta.sort(comp);
-            int a = 2;
         }
+    }
+
+    private void calculateU() {
+        this.U = new int[3];
+        this.U[TT] = Arrays.stream(grid.getGTable(TT)).max().getAsInt()*2;
+        this.U[RL] = Arrays.stream(grid.getGTable(RL)).max().getAsInt()*2;
+        this.U[JL] = Arrays.stream(grid.getGTable(JL)).max().getAsInt()*2;
     }
 
     private boolean checkC2(Label labelAccesible, Vertice[] vertices) {
         boolean dominated = false;
         int[] U = new int[3];
-        U[0] = 10;
-        U[1] = 24;
-        U[2] = 18;
+        U[TT] = 10;
+        U[RL] = 24;
+        U[JL] = 18;
         for (int k = 0; k<3; k++){
            // if (labelAccesible.getD(k) +  vertices[labelAccesible.getI()].c(k) + vertices[labelAccesible.getI()].getG(k) >= U[k]) {
             if (labelAccesible.getD(k) +  vertices[labelAccesible.getI()].getG(k) > U[k]) {
@@ -170,7 +177,7 @@ public class Model {
                     counter++;
                 }
             }
-            if (counter == 3){
+            if (counter == Constans.PARAM_NUM){
                 dominated = true;
                 return dominated;
             }
@@ -180,13 +187,13 @@ public class Model {
     }
 
     private Label initialize(Vertice[] vertices) {
-        int[] d = new int[3];
-        d[0] = vertices[0].c(0);
-        d[1] = vertices[0].c(1);
-        d[2] = vertices[0].c(2);
+        int[] d = new int[PARAM_NUM];
+        d[TT] = vertices[0].c(TT);
+        d[RL] = vertices[0].c(RL);
+        d[JL] = vertices[0].c(JL);
         int epsilon = SOURCE;
         Path path = new Path(epsilon, SOURCE, SOURCE);
-        Label label = new Label(epsilon, SOURCE, d[0], d[1], d[2], vertices[SOURCE].getH(), path);
+        Label label = new Label(epsilon, SOURCE, d[TT], d[RL], d[JL], vertices[SOURCE].getH(), path);
         return label;
     }
 }

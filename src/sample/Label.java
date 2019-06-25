@@ -1,5 +1,7 @@
 package sample;
 
+import static sample.Constans.*;
+
 public class Label {
     private int epsilon;
     private int i;
@@ -10,16 +12,16 @@ public class Label {
     public Label(int epsilon, int i, int d0, int d1, int d2, int h, Path path) {
         this.epsilon = epsilon;
         this.i = i;
-        this.d = new int[3];
-        this.d[0]=d0;
-        this.d[1]=d1;
-        this.d[2]=d2;
+        this.d = new int[Constans.PARAM_NUM];
+        this.d[TT]=d0;
+        this.d[RL]=d1;
+        this.d[JL]=d2;
         this.h = h;
         this.path = path;
     }
 
     public int dSum(){
-        return d[0] + d[1] +d[2];
+        return d[TT] + d[RL] +d[JL];
     }
 
     public int getEpsilon() {
@@ -41,8 +43,8 @@ public class Label {
     public int getD(int k){
         try {
             switch (k){
-                case Constans.TT:{
-                    return d[Constans.TT];
+                case TT:{
+                    return d[TT];
                 }
                 case Constans.RL:{
                     return d[Constans.RL];
@@ -62,8 +64,8 @@ public class Label {
 
     public void setd(int k, int value){
         switch (k) {
-            case Constans.TT: {
-                d[Constans.TT] = value;
+            case TT: {
+                d[TT] = value;
             }
             case Constans.RL: {
                 d[Constans.RL] = value;

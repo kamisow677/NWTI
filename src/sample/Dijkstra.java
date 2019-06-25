@@ -33,7 +33,7 @@ public class Dijkstra {
     }
     public void computeG(){
         int k  = 0;
-        for (k = 0 ; k<3 ; k++) {
+        for (k = 0 ; k<Constans.PARAM_NUM ; k++) {
             //Step 0. S ← V, S∗ ← ∅,  ← 0, and  ← ∞ for i ∈ V⧹{t}.
             initializeG(k);
 

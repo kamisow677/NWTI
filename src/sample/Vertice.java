@@ -1,9 +1,7 @@
 package sample;
 import java.util.ArrayList;
 
-import static sample.Constans.JL;
-import static sample.Constans.TT;
-import static sample.Constans.RL;
+import static sample.Constans.*;
 
 
 public class Vertice {
@@ -21,8 +19,8 @@ public class Vertice {
     public Vertice(int id, int TT, int RL, int JL) {
         this.i = id;
         this.phi_a = new ArrayList<>();
-        this.c = new int[3];
-        this.g = new int[3];
+        this.c = new int[PARAM_NUM];
+        this.g = new int[PARAM_NUM];
         this.c[Constans.TT]=TT;
         this.c[Constans.RL]=RL;
         this.c[Constans.JL]=JL;

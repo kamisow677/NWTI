@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+import static sample.Constans.GRID_DIM;
+
 public class Main extends Application {
 
     @Override
@@ -59,16 +61,14 @@ public class Main extends Application {
         Line line;
         for (Label p : pList){
             for (int k = 0; k <  p.getPath().listOfVertices.size()-1; k++ ){
-                int a = p.getPath().listOfVertices.get(k)/4;
-                int b = p.getPath().listOfVertices.get(k)%4;
-                int c = p.getPath().listOfVertices.get(k+1)/4;
-                int d = p.getPath().listOfVertices.get(k+1)%4;
+                int a = p.getPath().listOfVertices.get(k)/GRID_DIM;
+                int b = p.getPath().listOfVertices.get(k)%GRID_DIM;
+                int c = p.getPath().listOfVertices.get(k+1)/GRID_DIM;
+                int d = p.getPath().listOfVertices.get(k+1)%GRID_DIM;
                 line = new Line(100*a + 50, 100*b +50, 100*c + 50, 100*d +50);
                 root.getChildren().addAll(line);
             }
         }
-
-
         return root;
     }
 
