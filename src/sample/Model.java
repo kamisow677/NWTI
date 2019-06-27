@@ -14,16 +14,23 @@ public class Model {
     ArrayList<Label> delta;
     List<Label> P;
     int[] U;
-    
+    MyFileReaderWriter f ;
 
-    public void runCalculations(){
+    public Model() {
         grid = new Grid();
         dijkstra = new Dijkstra(grid,SOURCE,DESTINATION);
         delta =new ArrayList();
         P =new ArrayList();
+        f = new MyFileReaderWriter();
+    }
+
+    public void runCalculations(){
+
         calculateU();
         //MLCA CALCULATIONS
         MLCA();
+        f.writePaths(P);
+
 
     }
     public void printTable(String description, int[] table){

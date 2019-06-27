@@ -1,18 +1,16 @@
 package sample;
 
 
-import java.io.*;
-
 import static sample.Constans.GRID_DIM;
 import static sample.Constans.VERTICES_NUM;
 
 public class Grid {
-    Vertice[][] vertices = new Vertice[GRID_DIM][GRID_DIM];
-    Vertice[] verticesTable = new Vertice[VERTICES_NUM];
-    MyFileReader f = new MyFileReader();
+    Vertice[][] vertices;
+    Vertice[] verticesTable;
+    MyFileReaderWriter f = new MyFileReaderWriter();
     public Grid()  {
           vertices = f.read();
-
+          verticesTable = new Vertice[VERTICES_NUM];
 
 //        try {
 //            File file = new File("data.txt");

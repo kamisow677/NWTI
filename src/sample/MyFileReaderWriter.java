@@ -1,24 +1,44 @@
 package sample;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import javafx.scene.shape.Line;
+
+import java.io.*;
+import java.util.List;
 
 import static sample.Constans.*;
 
-public class MyFileReader {
+public class MyFileReaderWriter {
     Vertice[][] vertices;
-    String filePath;
+    String readFilePath;
+    String saveFilePath;
 
-    public MyFileReader(String filePath) {
+    public MyFileReaderWriter(String readPath,String writePath) {
         this();
-        this.filePath = filePath;
+        this.readFilePath = readPath;
+        this.saveFilePath = writePath;
     }
 
-    public MyFileReader() {
-        this.vertices = new Vertice[GRID_DIM][GRID_DIM];
-        this.filePath = "data.txt";
+    public MyFileReaderWriter() {
+        this.readFilePath = "data.txt";
+        this.saveFilePath = "result.txt";
+
+    }
+    public void writePaths(List<Label> paths){
+        FileWriter fileWriter = null;
+        PrintWriter printWriter = null;
+        try {
+            fileWriter = new FileWriter(saveFilePath);
+            printWriter = new PrintWriter(fileWriter);
+            for (Label label : paths){
+                String str = new String(label.getPath().listOfVertices.toString());
+                printWriter.println(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            printWriter.close();
+        }
 
     }
 
@@ -26,11 +46,13 @@ public class MyFileReader {
         BufferedReader fileReader = null;
 
         try {
-            fileReader = new BufferedReader(new FileReader(filePath));
+            fileReader = new BufferedReader(new FileReader(readFilePath));
             //Getting DIM
             String dim = fileReader.readLine();
             String[] split = dim.split(";");
             Constans.GRID_DIM =  Integer.parseInt(split[1]);
+            this.vertices = new Vertice[GRID_DIM][GRID_DIM];
+            Constans.VERTICES_NUM = GRID_DIM * GRID_DIM;
 
             dim = fileReader.readLine();
             split = dim.split(";");
@@ -50,7 +72,6 @@ public class MyFileReader {
                     vertices[i][j] = new Vertice(i * GRID_DIM + j, Integer.parseInt(split[TT]), Integer.parseInt(split[RL]) ,Integer.parseInt(split[JL]));
                 }
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
