@@ -61,6 +61,11 @@ public class MyFileReaderWriter {
             dim = fileReader.readLine();
             split = dim.split(";");
             Constans.DESTINATION =  Integer.parseInt(split[1]);
+            if (Constans.DESTINATION > Constans.VERTICES_NUM)
+                throw new Exception("DESTINATION DOESNT EXISTS");
+
+            if (Constans.SOURCE<0 || Constans.SOURCE>Constans.VERTICES_NUM)
+                throw new Exception("BAD SOURCE NUMBER");
 
             for (int i=0 ; i <GRID_DIM; i++){
                 for (int j=0 ; j <GRID_DIM; j++){
@@ -75,8 +80,11 @@ public class MyFileReaderWriter {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            System.out.println("There is no data.txt");
             e.printStackTrace();
         } catch (Exception e) {
+            System.out.println(e.toString());
+            System.out.println("OR NOT ENOUGH VERTICES !!!!");
             e.printStackTrace();
         } finally {
             try {

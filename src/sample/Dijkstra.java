@@ -93,7 +93,6 @@ public class Dijkstra {
 
         return minVertice.get().getId();
         // displaying elements of Stream using lambda expression
-        //stream.forEach(elem->System.out.print(elem+" "));
     }
 
     private int minGvertex(int k) {

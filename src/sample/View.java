@@ -19,24 +19,26 @@ public class View {
         List<Label> paths = pathsList;
 
         //ELEMENTS CREATION
-        final Rectangle rect = createRectangle(0,0,100,100,3);
-        final Rectangle rect2 = createRectangle(100,0,100,100,3);
-        final Text text = new Text ( 0,50,"ZWYCIESTWO");
-        final Text text2 = new Text (100,50,"ZWYCIESTWO");
         Line line = new Line(50, 50, 150, 50);
         line.setStroke(Color.BLUE);
         line.setStrokeWidth(5);
 
         //FILLING WINDOW
-        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Group root = new Group();
-        //root.getChildren().addAll(rect,rect2,text,text2,line);
 
         root = drawGrid(grid,root,paths);
-        primaryStage.setTitle("Hello World");
-        //root.getChildren().addAll(stack);
+        primaryStage.setTitle("Pareto optimal shortest paths for unarmed vehicle");
         primaryStage.setScene(new Scene(root, 800, 875));
         primaryStage.show();
+    }
+
+    public void printTable(String description, int[] table){
+        System.out.print(description+ " ");
+        for (int t : table){
+            System.out.print(" "+t);
+        }
+        System.out.println();
+
     }
 
     public static Group drawGrid(Grid grid, Group root, List<Label> pList){
